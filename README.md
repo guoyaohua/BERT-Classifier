@@ -27,7 +27,7 @@
   <a href="https://www.guoyaohua.com/" target="_blank">My Blog</a>
 </p>
 
-<h6 align="center">Create by Yaohua Guo • <a href="https://hanxiao.github.io">https://www.guoyaohua.com</a></h6>
+<h6 align="center">Create by Yaohua Guo • <a href="https://www.guoyaohua.com">https://www.guoyaohua.com</a></h6>
 
 ## Introduction
 
