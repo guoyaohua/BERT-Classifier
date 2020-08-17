@@ -29,7 +29,7 @@
 
 <h6 align="center">Create by Yaohua Guo • <a href="https://www.guoyaohua.com">https://www.guoyaohua.com</a></h6>
 
-## Introduction
+# Introduction
 
 [BERT](https://github.com/google-research/bert) is a pre-trained language model proposed by Google AI in 2018. It has achieved excellent results in many tasks in the NLP field, and it is also a turning point in the NLP field., academic paper which describes BERT in detail and provides full results on a number of tasks can be found here:https://arxiv.org/abs/1810.04805.
 
@@ -43,7 +43,7 @@ Optimized the model checkpoint saving mechanism, which can save TOP N checkpoint
 
 It also supports packaging the trained models into services for use by downstream tasks.
 
-## Feature
+# Feature
 
 - :muscle:: **State-of-the-art**: based on pretrained 12/24-layer BERT models released by Google AI, which is considered as a milestone in the NLP community.
 - :hatching_chick: **Easy-to-use**: require only two lines of code to fine-tune model or do inference.
@@ -57,9 +57,9 @@ It also supports packaging the trained models into services for use by downstrea
 
 Note that the Bert-Classifier MUST be running on **Python >= 3.5** with **Tensorflow == 1.14.0**. the Bert-Classifier does not support Tensorflow 2.0!
 
-## Getting Started
+# Getting Started
 
-### Download a Pre-trained BERT Model
+## Download a Pre-trained BERT Model
 Download a model listed below, then uncompress the zip file into some folder, like `./pre_train_model/uncased_L-12_H-768_A-12/`
 
 List of released pretrained BERT models: ([You can also download it here](https://github.com/google-research/bert#pre-trained-models))
@@ -76,8 +76,8 @@ List of released pretrained BERT models: ([You can also download it here](https:
 | **[`BERT-Base, Multilingual Uncased (Orig, not recommended)`](https://storage.googleapis.com/bert_models/2018_11_03/multilingual_L-12_H-768_A-12.zip)** | 102 languages, 12-layer, 768-hidden, 12-heads, 110M parameters |
 | **[`BERT-Base, Chinese`](https://storage.googleapis.com/bert_models/2018_11_03/chinese_L-12_H-768_A-12.zip)** | Chinese Simplified and Traditional, 12-layer, 768-hidden, 12-heads, 110M parameters |
 
-### Fine-turn the model on your own dataset
-#### Create data processor
+## Fine-turn the model on your own dataset
+### Create data processor
 
 You first need to define a processor that fits your data set. All data processors should be based on the DataProcessor base class and defined in the `processor.py` file.
 
@@ -205,7 +205,7 @@ model = BertClassifier(data_processor,
                        cycle)
 ```
 
-#### Model fine-tune
+### Model fine-tune
 
 After defining the processor of your data, you can train the model. First, briefly introduce the meaning of the parameters in `run_fine_tune.py`.
 
@@ -245,7 +245,7 @@ $python run_fine_tune.py  \
 
 In training mode, the model uses TFRecords files as input, which can make better use of memory, so after running `run_fine_tune.py`, the program first preprocesses the original input data and writes it to the TFRecords file. These files will be stored in the data_dir directory. This operation will only be performed for the first time. If the original data changes, you need to delete the TFRecords file in the data_dir directory, so that the program will generate TFRcords files based on the new data again.
 
-### Use model for inference
+## Use model for inference
 
 You only need three lines of code to use the model for inference tasks, as shown below:
 
@@ -273,7 +273,7 @@ When predicting a single sample, for example, in some streaming task scenarios, 
 
 In batch sample prediction, you can directly pass in the file path. The model will first parse the file according to the MyProcessor defined above and perform batch inference. The result will be saved in the directory specified by output_dir.
 
-### Inference service
+## Inference service
 
 Flask encapsulates a simple model inference microservice, You may call the service via HTTP requests. You can easily start this service using the following code:
 
@@ -285,9 +285,9 @@ $python start_service.py \
 	5666
 ```
 
-![inference service](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/start_service.gif)
+![inference service](http://pic.guoyaohua.com//image/BERT-Classifier/start_service.gif)
 
-## Tensorboard
+# Tensorboard
 
 Bert-Classifier adds a wealth of monitoring indicators to more intuitively show the changes in model performance during training. You can run tensorboard with the following command.
 
@@ -295,15 +295,15 @@ Bert-Classifier adds a wealth of monitoring indicators to more intuitively show 
 $tensorboard --logdir ./tensorboard_dir
 ```
 
-![tensorboard_scalar](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/tensorboard_scalar.png)
+![tensorboard_scalar](http://pic.guoyaohua.com//image/BERT-Classifier/tensorboard_scalar.png)
 
-![tensorboard_image](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/tensorboard_image.png)
+![tensorboard_image](http://pic.guoyaohua.com//image/BERT-Classifier/tensorboard_image.png)
 
-![tensorboard_hist1](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/tensorboard_hist1.png)
+![tensorboard_hist1](http://pic.guoyaohua.com//image/BERT-Classifier/tensorboard_hist1.png)
 
-![tensorboard_hist2](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/tensorboard_hist2.png)
+![tensorboard_hist2](http://pic.guoyaohua.com//image/BERT-Classifier/tensorboard_hist2.png)
 
-## Multi-GPU support
+# Multi-GPU support
 
 Bert-Classifier uses data parallelism to implement multi-GPU parallel training tasks. You can choose to use CPU, single GPU, multi-GPU for training and inference tasks according to different needs.
 
@@ -332,17 +332,17 @@ $python run_fine_tune.py  \
 
 In the multi-GPU training mode, Bert-Classifier will keep a copy of the model with shared parameters on each GPU, and will automatically distribute the input batch evenly to all GPUs for forward propagation and gradient calculation. The gradient values obtained by each GPU calculation will be reassembled, and the parameters will be optimized after averaging.
 
-![Multi-GPU](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/Multi-GPU.png)
+![Multi-GPU](http://pic.guoyaohua.com//image/BERT-Classifier/Multi-GPU.png)
 
-## Fast data preprocess
+# Fast data preprocess
 
 Bert-Classifier uses multiple processes to accelerate data preprocessing, which is more than 10 times faster than bert preprocessing (specifically related to the number of CPU cores, clock speed, and memory size). The program will adaptively start the corresponding number of processes according to the user's CPU core information.
 
-![process_data](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/process_data.gif)
+![process_data](http://pic.guoyaohua.com//image/BERT-Classifier/process_data.gif)
 
 > Note: Since the python multi-process mechanism is not memory-friendly, if the memory is too small, it will cause OOM.
 
-## Average checkpoints
+# Average checkpoints
 
 The `average_checkpoints.py` script can be used to average the parameters of multiple checkpoints, which usually improves the robustness of the model. You can use the following command to perform checkpoint averaging.
 
@@ -353,15 +353,15 @@ $python average_checkpoints.py \
 	--max_count=20
 ```
 
-![average_checkpoints](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/average_checkpoints.gif)
+![average_checkpoints](http://pic.guoyaohua.com//image/BERT-Classifier/average_checkpoints.gif)
 
-## Benchmark
+# Benchmark
 
 All experiments are based on  `BERT-Base` , the GPU uses GTX 1080 (8G), and Tnesorflow version is 1.14.0.
 
-### Fine-tune
+## Fine-tune
 
-#### Max batch size
+### Max batch size
 
 | `max_seq_len` | 1 GPU | 2 GPU | 4 GPU |
 | ------------- | ----- | ----- | ----- |
@@ -372,9 +372,9 @@ All experiments are based on  `BERT-Base` , the GPU uses GTX 1080 (8G), and Tnes
 | 256           | 14    | 28    | 56    |
 | 512           | 5     | 10    | 20    |
 
-![Fine-tune Max Batch Size](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/Fine_tune_Max_Batch_Size.png)
+![Fine-tune Max Batch Size](http://pic.guoyaohua.com//image/BERT-Classifier/Fine_tune_Max_Batch_Size.png)
 
-#### Speed
+### Speed
 
 In terms of calculation speed, the comparison of the time (ms) consumed by the model to run one training step at full GPU load under different `max_seq_len` conditions was tested.
 
@@ -387,11 +387,11 @@ In terms of calculation speed, the comparison of the time (ms) consumed by the m
 | 256           | 602   | 633   | 675   |
 | 512           | 515   | 532   | 568   |
 
-![Fine-Tune Speed](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/Fine_Tune_Speed.png)
+![Fine-Tune Speed](http://pic.guoyaohua.com//image/BERT-Classifier/Fine_Tune_Speed.png)
 
-### Inference
+## Inference
 
-#### Max batch size
+### Max batch size
 
 | `max_seq_len` | 1 GPU | 2 GPU | 4 GPU |
 | ------------- | ----- | ----- | ----- |
@@ -402,9 +402,9 @@ In terms of calculation speed, the comparison of the time (ms) consumed by the m
 | 256           | 369   | 739   | 1478  |
 | 512           | 128   | 256   | 512   |
 
-![Inference Max Batch Size](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/Inference_Max_Batch_Size.png)
+![Inference Max Batch Size](http://pic.guoyaohua.com//image/BERT-Classifier/Inference_Max_Batch_Size.png)
 
-#### Speed
+### Speed
 
 The test compares the time (s) consumed by the model to run an Inference with the GPU fully loaded under different `max_seq_len` conditions.
 
@@ -417,9 +417,9 @@ The test compares the time (s) consumed by the model to run an Inference with th
 | 256           | 5.52  | 5.98  | 6.52  |
 | 512           | 4.83  | 5.17  | 5.37  |
 
-![Inference Speed](https://raw.githubusercontent.com/guoyaohua/BERT-Classifier/master/.github/Inference_Speed.png)
+![Inference Speed](http://pic.guoyaohua.com//image/BERT-Classifier/Inference_Speed.png)
 
-## Citing
+# Citing
 
 If you use Bert-Classifier in a scientific publication, we would appreciate references to the following BibTex entry:
 
